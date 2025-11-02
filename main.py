@@ -78,7 +78,12 @@ def run_camera():
     print("Starting live Picamera2 feed. Press 'q' to quit.")
     while True:
         frame = picam2.capture_array()
-        results = model(frame)
+        # Convert BGRA to BGR for compatibility with YOLOv8
+        if frame.shape[2] == 4:
+            frame_bgr = cv2.cvtColor(frame, cv2.COLOR_BGRA2BGR)
+        else:
+            frame_bgr = frame
+        results = model(frame_bgr)
         person_count = 0
         for result in results:
             boxes = result.boxes
@@ -88,13 +93,13 @@ def run_camera():
                 if cls == 0 and conf > CONFIDENCE_THRESHOLD:
                     person_count += 1
                     x1, y1, x2, y2 = map(int, box.xyxy[0])
-                    cv2.rectangle(frame, (x1, y1), (x2, y2), (10, 255, 0), 2)
+                    cv2.rectangle(frame_bgr, (x1, y1), (x2, y2), (10, 255, 0), 2)
                     label = f'Person {person_count}: {int(conf * 100)}%'
-                    cv2.putText(frame, label, (x1, y1 - 10),
+                    cv2.putText(frame_bgr, label, (x1, y1 - 10),
                                 cv2.FONT_HERSHEY_SIMPLEX, 0.5, (10, 255, 0), 2)
-        cv2.putText(frame, f'People Count: {person_count}', (30, 50),
+        cv2.putText(frame_bgr, f'People Count: {person_count}', (30, 50),
                     cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 2, cv2.LINE_AA)
-        cv2.imshow('Live Picamera2 Feed', frame)
+        cv2.imshow('Live Picamera2 Feed', frame_bgr)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
     cv2.destroyAllWindows()
