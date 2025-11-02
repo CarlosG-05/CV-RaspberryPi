@@ -72,17 +72,18 @@ def run_detection():
 def run_camera():
     from picamera2 import Picamera2
     print("Loading YOLOv8 model...")
-    model = YOLO('yolov8n.pt')
+    model = YOLO('yolo11n_ncnn_model')
     picam2 = Picamera2()
+    picam2.preview_configuration.main.size = (1280, 720)
+    picam2.preview_configuration.main.format = "RGB888"
+    picam2.preview_configuration.main.fps = 60
+    picam2.configure("preview")
     picam2.start()
-    print("Starting live Picamera2 feed. Press 'q' to quit.")
+    print("Starting live Picamera2 feed at 1280x720 60fps. Press 'q' to quit.")
     while True:
         frame = picam2.capture_array()
-        # Convert BGRA to BGR for compatibility with YOLOv8
-        if frame.shape[2] == 4:
-            frame_bgr = cv2.cvtColor(frame, cv2.COLOR_BGRA2BGR)
-        else:
-            frame_bgr = frame
+        # Convert RGB to BGR for YOLOv8 and OpenCV display
+        frame_bgr = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
         results = model(frame_bgr)
         person_count = 0
         for result in results:
