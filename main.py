@@ -74,7 +74,7 @@ def run_camera():
     print("Loading YOLOv8 model...")
     model = YOLO('yolo11n_ncnn_model')
     picam2 = Picamera2()
-    picam2.preview_configuration.main.size = (1280, 720)
+    picam2.preview_configuration.main.size = (640, 360)
     picam2.preview_configuration.main.format = "RGB888"
     picam2.preview_configuration.controls = {"FrameDurationLimits": (16667, 16667)}  # 60fps
     picam2.configure("preview")
@@ -83,7 +83,7 @@ def run_camera():
     while True:
         frame = picam2.capture_array()
         # Convert RGB to BGR for YOLOv8 and OpenCV display
-        frame_bgr = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
+        frame_bgr = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         results = model(frame_bgr)
         person_count = 0
         for result in results:
