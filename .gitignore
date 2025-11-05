@@ -1,3 +1,32 @@
+local-rpi4/output.jpg
+local-rpi4/section_*.jpg
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual environments
 venv/
-output.jpg
-section_*.jpg
+env/
+.venv/
+.env/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE/editor files
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Docker
+*.pid
+*.db
+*.sqlite3
+
+# Environment/config files
+.env
