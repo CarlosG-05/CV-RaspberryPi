@@ -4,7 +4,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-#TODO: Move to .env
 ssid = os.getenv("SSID")
 password = os.getenv("PASSWORD")
 
