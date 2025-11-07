@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import sys
 from ultralytics import YOLO
+import wifi
 
 IMAGE_PATH = "test.jpg"
 OUTPUT_IMAGE_PATH = "output.jpg"
