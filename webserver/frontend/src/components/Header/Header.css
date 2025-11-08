@@ -1,0 +1,9 @@
+.container {
+    display: flex;
+    background-color: lightblue;
+    padding: 20px;
+}
+
+.title {
+    margin-right: auto;
+}
