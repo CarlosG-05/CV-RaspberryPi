@@ -4,12 +4,13 @@ export default function Header() {
   return (
     <>
       <div class="container">
-        <h1 class="title">OccupyAI</h1>
-        <button>Floor 1</button>
-        <button>Floor 2</button>
-        <button>Floor 3</button>
-        <button>Floor 4</button>
-        <button>Floor 5</button>
+        <img class="title" src="../../../public/logo.png" alt="logo" width="200px" height="200px"/> 
+        <h1>Love Library Study Rooms</h1>
+        <button>1</button>
+        <button>2</button>
+        <button>3</button>
+        <button>4</button>
+        <button>5</button>
       </div>
     </>
   )
