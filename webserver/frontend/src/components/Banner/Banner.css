@@ -11,8 +11,10 @@
 
 .banner-container .overlay-text {
     position: absolute; 
-    top: 30%;
-    left: 20px; 
+    left: 5%; 
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
     
     color: white;
     padding: 10px;
