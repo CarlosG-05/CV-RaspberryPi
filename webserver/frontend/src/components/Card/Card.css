@@ -5,23 +5,37 @@
     padding: 30px;
     border: solid 1px black;
     color: white;
+    display: flex;
+    justify-content: space-between;
 }
 
 .card-container:hover {
     background-color: #467D1C;
 }
 
-.card-container h1, h3 {
+.card-container .card-info {
+    margin-left: 3%;
+}
+
+.card-container .card-info h1, h3 {
     padding: 0px;
-    font-size: 30px;
     font-family: sans-serif;
-    width: 80%;
+    width: 200px;
 }
 
-.card-container h1 {
-    margin-bottom: 30px;
+.card-container .card-info h1 {
+    font-size: 30px;
+    margin-bottom: 40px;
 }
 
-.card-container h3 {
+.card-container .card-info h3 {
     font-size: 20px;
+}
+
+.room-state {
+    margin-right: 5%;
+    display: flex;
+    justify-content: center; 
+    align-items: center;    
+    font-size: 30px;
 }
