@@ -41,7 +41,7 @@ function App() {
             <Header setCurrentLevel={setCurrentLevel} />
             <Banner level={currentLevel} />
             <h1>Room Availability</h1>
-            <Display />
+            <Display levelInfo={levelInfo}/>
 
             <div style={{ padding: '20px' }}>
                 <hr />
