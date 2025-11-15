@@ -2,7 +2,6 @@ import './Header.css'
 import logo from '../../assets/logo.png';
 
 export default function Header({ setCurrentLevel }) {
-<<<<<<< HEAD
 
     return (
       <>
