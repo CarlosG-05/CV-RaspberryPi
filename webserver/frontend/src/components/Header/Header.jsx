@@ -6,7 +6,7 @@ export default function Header({ setCurrentLevel }) {
     return (
       <>
         <div class="container">
-          <img class="title" src="/logo.png" alt="logo" width="200px" height="200px"/> 
+          <img class="title" src={logo} alt="logo" width="200px" height="200px"/> 
           <h1>Love Library Study Rooms</h1>
 
           <div class="dropdown">

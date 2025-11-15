@@ -16,7 +16,7 @@ function App() {
             setError(null);
             
             try {
-                const url = `https://jsonplaceholder.typicode.com/posts/${currentLevel}`;
+                const url = `http://localhost:8000/rooms`;
                 const response = await fetch(url);
 
                 if (!response.ok) {
@@ -52,11 +52,7 @@ function App() {
                 {error && <p style={{ color: 'red' }}>Error: {error}</p>}
 
                 {levelInfo && (
-                    <article>
-                        <h3>Title: {levelInfo.title}</h3>
-                        <p>Body: {levelInfo.body}</p>
-                        <small>User ID: {levelInfo.userId}</small>
-                    </article>
+                        <pre>{JSON.stringify(levelInfo, null, 2)}</pre>
                 )}
             </div>
         </>
