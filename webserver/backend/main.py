@@ -173,7 +173,7 @@ def seed_if_empty():
         print(f"[Startup seed] Error: {e}")
 
 @app.post("/update_occupancy")
-def update_occupancy(data: Request):
+async def update_occupancy(data: Request):
     """Update current occupancy for a study room."""
     try:
         payload = await data.json()
