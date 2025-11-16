@@ -102,11 +102,13 @@ def run_camera():
                 if cls == 0 and conf > CONFIDENCE_THRESHOLD:
                     person_count += 1
         payload = {"count": person_count}
-        try:
-            response = requests.post(SERVER_URL, json=payload)
-            print("Posted:", payload, "Response:", response.status_code)
-        except Exception as e:
-            print("Error posting data:", e)
+        # Posting to server is commented out for now
+        # try:
+        #     response = requests.post(SERVER_URL, json=payload)
+        #     print("Posted:", payload, "Response:", response.status_code)
+        # except Exception as e:
+        #     print("Error posting data:", e)
+        print("Would post:", payload)
         return person_count
 
     while True:
