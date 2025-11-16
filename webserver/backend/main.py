@@ -176,7 +176,7 @@ def seed_if_empty():
 def update_occupancy(data: Request):
     """Update current occupancy for a study room."""
     try:
-        payload = data.json()
+        payload = await data.json()
         room_number = payload.get("room_number")
         new_occupancy = payload.get("current_occupancy")
         floor = payload.get("floor")
