@@ -1,6 +1,6 @@
 .container {
     display: flex;
-    background-color: white;
+    background-color: #f9f4e4;
     height: 75px;
     align-items: center;
 }
@@ -17,7 +17,7 @@ h1 {
 }
 
 .dropbtn {
-    background-color: #467D1C;
+    background-color: #595c5e;
     color: white;
     padding: 16px;
     font-size: 16px;
@@ -33,7 +33,7 @@ h1 {
 #more .dropbtn {
     width: 100px;
     font-size: 40px;
-    background-color: #1c467d;
+    background-color: #ff5038;
 }
 
 .dropdown-content {
@@ -53,8 +53,8 @@ h1 {
 }
 
 /* Button hover background color */
-.dropdown:hover .dropbtn {background-color: #5DA725;}
-#more:hover .dropbtn {background-color: #255DA7;}
+.dropdown:hover .dropbtn {background-color: #676a6c;}
+#more:hover .dropbtn {background-color: #FF2305;}
 
 .dropdown-content a:hover {background-color: #ddd;}
 
