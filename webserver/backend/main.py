@@ -172,12 +172,33 @@ def seed_if_empty():
     except Exception as e:
         print(f"[Startup seed] Error: {e}")
 
-@app.post("/data")
-async def receive_data(request: Request):
-    data = await request.json()
-    print(f"Received data: {data}")
+@app.post("/update_occupancy")
+def update_occupancy(data: Request):
+    """Update current occupancy for a study room."""
     try:
-        response = supabase.table("study_rooms").insert(data).execute()
+        payload = data.json()
+        room_number = payload.get("room_number")
+        new_occupancy = payload.get("current_occupancy")
+        floor = payload.get("floor")
+        building = payload.get("building")
+        missing = []
+        if room_number is None:
+            missing.append("room_number")
+        if new_occupancy is None:
+            missing.append("current_occupancy")
+        if floor is None:
+            missing.append("floor")
+        if building is None:
+            missing.append("building")
+        if missing:
+            return JSONResponse(content={"status": "error", "message": f"Missing required fields: {', '.join(missing)}"}, status_code=400)
+
+        response = supabase.table("study_rooms")\
+            .update({"current_occupancy": new_occupancy})\
+            .eq("room_number", room_number)\
+            .eq("floor", floor)\
+            .eq("building", building)\
+            .execute()
         return JSONResponse(content={"status": "success", "data": response.data})
     except Exception as e:
         return JSONResponse(content={"status": "error", "message": str(e)}, status_code=500)

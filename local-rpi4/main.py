@@ -11,7 +11,11 @@ IMAGE_PATH = "test.jpg"
 
 OUTPUT_IMAGE_PATH = "output.jpg"
 CONFIDENCE_THRESHOLD = 0
-SERVER_URL = "http://your-server-url/api/endpoint"  # <-- Set your server URL here
+SERVER_URL = "https://occupyai.onrender.com/update_occupancy"  # <-- Set your server URL here
+
+ROOM_NUMBER = "LL-312"
+FLOOR = 3
+BUILDING = "Love Library"
 
 def run_detection():
     print(f"Loading image from {IMAGE_PATH}...")
@@ -81,7 +85,7 @@ def run_camera():
     print("Loading YOLOv8 model...")
     model = YOLO('yolo11n_ncnn_model')
     picam2 = Picamera2()
-    picam2.preview_configuration.main.size = (640, 360)
+    picam2.preview_configuration.main.size = (1280, 720)
     picam2.preview_configuration.main.format = "BGR888"
     picam2.preview_configuration.controls = {"FrameDurationLimits": (16667, 16667)}  # 60fps
     picam2.configure("preview")
@@ -101,13 +105,17 @@ def run_camera():
                 conf = float(box.conf[0])
                 if cls == 0 and conf > CONFIDENCE_THRESHOLD:
                     person_count += 1
-        payload = {"count": person_count}
-        # Posting to server is commented out for now
-        # try:
-        #     response = requests.post(SERVER_URL, json=payload)
-        #     print("Posted:", payload, "Response:", response.status_code)
-        # except Exception as e:
-        #     print("Error posting data:", e)
+        payload = {
+            "room_number": ROOM_NUMBER,
+            "current_occupancy": person_count,
+            "floor": FLOOR,
+            "building": BUILDING
+        }
+        try:
+            response = requests.post(SERVER_URL, json=payload)
+            print("Posted:", payload, "Response:", response.status_code)
+        except Exception as e:
+            print("Error posting data:", e)
         print("Would post:", payload)
         return person_count
 
