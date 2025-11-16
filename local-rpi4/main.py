@@ -1,12 +1,17 @@
 import cv2
 import numpy as np
 import sys
+import threading
+import time
+import requests
 from ultralytics import YOLO
-import wifi
+#import wifi
 
 IMAGE_PATH = "test.jpg"
+
 OUTPUT_IMAGE_PATH = "output.jpg"
 CONFIDENCE_THRESHOLD = 0
+SERVER_URL = "http://your-server-url/api/endpoint"  # <-- Set your server URL here
 
 def run_detection():
     print(f"Loading image from {IMAGE_PATH}...")
@@ -71,6 +76,7 @@ def run_detection():
     print(f"Success! Output image saved to: {OUTPUT_IMAGE_PATH}")
 
 def run_camera():
+
     from picamera2 import Picamera2
     print("Loading YOLOv8 model...")
     model = YOLO('yolo11n_ncnn_model')
@@ -81,11 +87,36 @@ def run_camera():
     picam2.configure("preview")
     picam2.start()
     print("Starting live Picamera2 feed at 1280x720 60fps. Press 'q' to quit.")
+
+    last_post_time = time.time()
+    post_interval = 30  # seconds
+
+    def analyze_and_post(frame):
+        results = model(frame)
+        person_count = 0
+        for result in results:
+            boxes = result.boxes
+            for box in boxes:
+                cls = int(box.cls[0])
+                conf = float(box.conf[0])
+                if cls == 0 and conf > CONFIDENCE_THRESHOLD:
+                    person_count += 1
+        payload = {"count": person_count}
+        try:
+            response = requests.post(SERVER_URL, json=payload)
+            print("Posted:", payload, "Response:", response.status_code)
+        except Exception as e:
+            print("Error posting data:", e)
+        return person_count
+
     while True:
         frame = picam2.capture_array()
-        # Convert RGB to BGR for YOLOv8 and OpenCV display
         frame_bgr = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        frame_bgr = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        # Only analyze and post every 30 seconds
+        if time.time() - last_post_time > post_interval:
+            threading.Thread(target=analyze_and_post, args=(frame_bgr,), daemon=True).start()
+            last_post_time = time.time()
+        # For live view, you can still run detection for overlay
         results = model(frame_bgr)
         person_count = 0
         for result in results:
