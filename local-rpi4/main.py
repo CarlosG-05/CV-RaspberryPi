@@ -11,7 +11,7 @@ IMAGE_PATH = "test.jpg"
 
 OUTPUT_IMAGE_PATH = "output.jpg"
 CONFIDENCE_THRESHOLD = 0
-SERVER_URL = "https://occupyai.onrender.com/update_occupancy"  # <-- Set your server URL here
+SERVER_URL = "https://occupi.onrender.com/update_occupancy"  # <-- Set your server URL here
 
 ROOM_NUMBER = "LL-312"
 FLOOR = 3
